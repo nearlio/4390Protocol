@@ -65,7 +65,7 @@ class ClientHandler implements Runnable {
     }
 
     /**
-     * Trim whitespace from a message to prepare to interpret it as a math problem
+     * Regex match a valid math problem
      */
     public boolean validate(String s)
     {
@@ -74,6 +74,9 @@ class ClientHandler implements Runnable {
         return m.find();
     }
 
+    /**
+     * Solve a given (trimmed and valid) string math problem
+     */
     public String solve(String s)
     {
         int ret = 0;
@@ -118,6 +121,9 @@ class ClientHandler implements Runnable {
 
     }
 
+    /**
+     * Reply to a user math problem request
+     */
     public void reply(String message, DataOutputStream d) throws IOException {
         if(isConnected)
         {
@@ -135,6 +141,10 @@ class ClientHandler implements Runnable {
 
         }
     }
+
+    /**
+     * Handle all user messages
+     */
     public void run() {
         try {
             while (true) {
@@ -143,14 +153,17 @@ class ClientHandler implements Runnable {
                     return;
                 }
 
+                //Prepare I/O from socket
                 BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-
                 DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
 
+                //read message from client
                 String clientSentence = inFromClient.readLine();
+
+
                 if (clientSentence != null) {
                     Message m = new Message(clientSentence);
+                    //Handle each type of message id
                     switch (m.getId())
                     {
                         case 1:
@@ -165,7 +178,6 @@ class ClientHandler implements Runnable {
                         case 3:
                             System.out.println("Case 3 - Message");
                             reply(m.getBody(),outToClient);
-                            //outToClient.writeBytes(Message.makeServerReply("hello") + '\n');
                             break;
                         case 4:
                             //System.out.println("Case 4 - KeepAlive");
