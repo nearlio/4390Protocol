@@ -13,7 +13,10 @@ class TCPClient {
     /**
      * The main method gathers user data, then branches into Threads to send messages, receive messages, and to accept user input.
      */
+    public static boolean receivedGoAhead = false;
+
     public static void main(String argv[]) throws Exception {
+        boolean receivedGoAhead = false;
         int port = 8421;
         String username;
         String IP;
@@ -43,7 +46,23 @@ class TCPClient {
         new Thread(w).start();
 
         //Automatically send join request to server
-        w.addMessage(Message.makeJoin(username));
+
+        w.addMessage(Message.makeJoin(username) + '\n');
+
+        int tries = 0;
+        while(!r.receivedGoAhead)
+        {
+            Thread.sleep(100);
+            System.out.println("Connecting...");
+            tries ++;
+            if(tries > 100)
+            {
+                System.out.println("Failed to connect.");
+                clientSocket.close();
+                return;
+            }
+        }
+        System.out.println("Connected!");
 
         //Send as many messages as the user wants
         while (true) {
@@ -78,6 +97,7 @@ class TCPClient {
  * The MessageReader class runs a thread that reads and prints messages from the server
  */
 class MessageReader implements Runnable {
+    public boolean receivedGoAhead;
     private Socket socket;
     private BufferedReader dataIn;
 
@@ -85,6 +105,7 @@ class MessageReader implements Runnable {
      * The MessageReader constructor takes a Socket and creates a Buffer to read from it
      */
     public MessageReader(Socket sock) throws IOException {
+        this.receivedGoAhead = false;
         this.socket = sock;
         this.dataIn = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
@@ -112,6 +133,10 @@ class MessageReader implements Runnable {
                 if(m.getId() == 5)
                 {
                     System.out.println("Reply from server: " + m.getBody());
+                }
+                else if(m.getId() == 1)
+                {
+                    receivedGoAhead = true;
                 }
             }
 

@@ -170,6 +170,7 @@ class ClientHandler implements Runnable {
                             System.out.println("Case 1 - Join");
                             isConnected = true;
                             name = m.getBody();
+                            outToClient.writeBytes(Message.makeJoin(name) + '\n');
                             break;
                         case 2:
                             System.out.println("Case 2 - Disconnect");
