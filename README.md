@@ -2,7 +2,7 @@
 
 # Math
 
-Math is of the form `[0-9]+[\-+*/][0-9]+`. That is, `digits``symbol``digits`. It can do addition, subtraction, multiplication and division. It handles division by zero correctly.
+Math is of the form `[0-9]+[\-+*/][0-9]+`. That is, `digits` `symbol` `digits`. It can do addition, subtraction, multiplication and division. It handles division by zero correctly.
 
 # Protocol
 
