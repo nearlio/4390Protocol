@@ -18,7 +18,7 @@ The remainder is a body of text that accompanies the message.
 
 Clients send the message (ID=1,body=username) to join the server, which will ignore their messages otherwise.
 
-Clients wait until they receive that message back as confirmation they are connected before sending more messages. [NOTE: NO THEY DONT!!! BUT THEY SHOULD]
+Clients wait until they receive that message back as confirmation they are connected before sending more messages.
 
 Clients send keepalives (ID=4,body=empty) to keep the TCP connection alive.
 
@@ -36,8 +36,6 @@ To disconnect, the Client sends (ID=2,body=username).
 Server-side logging.
 
 A good read me.
-
-That note above.
 
 Instructions on how to run it I don't understand java.
 
