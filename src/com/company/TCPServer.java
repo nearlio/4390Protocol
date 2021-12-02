@@ -7,6 +7,8 @@ import java.time.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.util.logging.*;
+
 /**
  * The TCPServer class creates a multi-threaded server, launching a new thread for each new client connected
  * This allows multiple clients to connect at once.
@@ -151,6 +153,7 @@ class ClientHandler implements Runnable {
     }//reply
 
     /**
+     * Creates logger and file per connection.
      * Handle all user messages
      * While the client socket is open
      *      We read the client message into clientSentence through a buffer
@@ -159,6 +162,20 @@ class ClientHandler implements Runnable {
      */
     public void run() {
         try {
+
+            //creates logger object by the name of logFile
+            Logger LOGGER = Logger.getLogger("logFile");
+
+            //one file created per user connection.  Handler added to logger.
+            Handler fileHandler = null;
+            try{
+                fileHandler = new FileHandler("./TCPServer.log");
+                LOGGER.addHandler(fileHandler);
+                fileHandler.setLevel(Level.ALL);
+            }catch(IOException exception){
+                LOGGER.log(Level.SEVERE, "Error in fileHandler");
+            }
+
             while (true) {
                 if(socket.isClosed())
                 {
@@ -183,10 +200,13 @@ class ClientHandler implements Runnable {
                             isConnected = true;
                             name = m.getBody();
                             outToClient.writeBytes(Message.makeJoin(name) + '\n');
+
+                            LOGGER.info("Username: " + name + " successfully connected at: " + Instant.now());
                             break;
                         case 2:
                             System.out.println("Case 2 - Disconnect");
                             disconnect();
+                            LOGGER.info("Username: " + name + " successfully disconnected at: " + Instant.now());
                             return;
                         case 3:
                             System.out.println("Case 3 - Message");

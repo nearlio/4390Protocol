@@ -27,17 +27,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ec680d5-e3de-45e4-912f-5b22d3680c3d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/company/com/company/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/company/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/company/com/company/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/Message.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/company/com/company/MessageReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/MessageReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/company/com/company/MessageSender.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/MessageSender.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/company/com/company/TCPClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/TCPClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/company/com/company/TCPServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/company/com/company/TCPServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Message.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/TCPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TCPClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/TCPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/TCPServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,6 +139,14 @@
       <option name="presentableId" value="Default" />
       <updated>1638468648561</updated>
     </task>
+    <task id="LOCAL-00001" summary="additional comments">
+      <created>1638478662276</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1638478662276</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,6 +171,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="additional comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="additional comments" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1638476951755">
