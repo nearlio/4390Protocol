@@ -31,21 +31,30 @@ class TCPClient {
             IP = "127.0.0.1";
         }
 
-        //Request username
+        //Request username, saved as string
         System.out.println("Enter username: ");
         username = inFromUser.readLine();
 
         //Create connection
         Socket clientSocket = new Socket(IP, port);
 
-        //Create message sending and receiving threads
+        //Create message sending and receiving threads.  R is reader, W is sender.
         MessageReader r = new MessageReader(clientSocket);
         MessageSender w = new MessageSender(clientSocket);
 
         new Thread(r).start();
         new Thread(w).start();
 
-        //Automatically send join request to server
+        /*
+        Automatically send join request to server
+        While no goAhead
+            Wait .sleep(100)
+            Increment try counter
+            Times out when attempts > 0
+        Otherwise, connected.
+            User can send as many messages as desired, as long as the clientSocket is open.
+            User sends "#" to disconnect.
+         */
 
         w.addMessage(Message.makeJoin(username) + '\n');
 
@@ -90,9 +99,10 @@ class TCPClient {
         clientSocket.close();
 
         System.out.println("Clean Disconnect.");
-    }
+    }//main
 
-}
+}//TCPClient
+
 /**
  * The MessageReader class runs a thread that reads and prints messages from the server
  */
@@ -112,7 +122,13 @@ class MessageReader implements Runnable {
 
     /**
      * The run method reads lines from the socket until it closes, and prints any Server-Replies it receives
-     */
+     *
+     * If the socket has read data from the socket, it checks the ID.
+     *      1 = Server has sent a confirm (outToClient.writeBytes(Message.makeJoin(name) + '\n');)
+     *          Client sets receivedGoAhead = true.
+     *      5 = Client has received a reply (the solution to the math problem).
+     *          Print reply from server.
+     **/
     public void run() {
         while (true) {
             if(socket.isClosed())
@@ -138,12 +154,11 @@ class MessageReader implements Runnable {
                 {
                     receivedGoAhead = true;
                 }
-            }
+            }//if
 
-
-        }
-    }
-}
+        }//while
+    }//run
+}//MessageReader Runnable
 
 /**
  * The MessageSender class runs a thread that sends any messages put in its thread-safe Queue
@@ -162,7 +177,7 @@ class MessageSender implements Runnable {
         this.socket = sock;
         this.dataOut = new DataOutputStream(this.socket.getOutputStream());
         this.q = new ConcurrentLinkedQueue<String>();
-    }
+    }//messageSender IOException
 
     /**
      * addMessage adds a String message to a queue to be sent to the server
@@ -199,7 +214,6 @@ class MessageSender implements Runnable {
         } catch (IOException e) {
 
         }
-    }
+    }//run
 
-
-}
+}//messageSender Runnable

@@ -46,7 +46,7 @@ public class Message {
         this.id = line.charAt(0) - '0';
         this.meta = line.charAt(1) - '0';
         this.body = line.substring(2);
-    }
+    }//Message constructor
 
     /**
      * encode converts a Message object to a String
@@ -58,10 +58,11 @@ public class Message {
         ret = ret + (char)(meta + '0');
         ret = ret + body;
         return ret;
-    }
+    }//encode
 
     /**
      * makeJoin creates a Join Message String
+     * ID = 1
      */
     public static String makeJoin(String name)
     {
@@ -70,10 +71,11 @@ public class Message {
         ret = ret + '0';
         ret = ret + name;
         return ret;
-    }
+    }//makeJoin
 
     /**
      * makeDisconnect creates a Disconnect Message String
+     * ID = 2
      */
     public static String makeDisconnect(int disconnectReason,String name)
     {
@@ -82,10 +84,11 @@ public class Message {
         ret = ret + (char)(disconnectReason + '0');
         ret = ret + name;
         return ret;
-    }
+    }//makeDisconnect
 
     /**
      * makeUserMessage creates a User-Message String
+     * ID = 3
      */
     public static String makeUserMessage(String msg)
     {
@@ -94,10 +97,11 @@ public class Message {
         ret = ret + '0';
         ret = ret + msg;
         return ret;
-    }
+    }//makeUserMessage
 
     /**
      * makeKeepAlive creates a Keepalive String
+     * ID = 4
      */
     public static String makeKeepAlive()
     {
@@ -105,10 +109,11 @@ public class Message {
         ret = ret + '4';
         ret = ret + '0';
         return ret;
-    }
+    }//makeKeepAlive
 
     /**
      * makeServerReply creates a Server-Reply String
+     * ID = 5
      */
     public static String makeServerReply(String msg)
     {
@@ -117,8 +122,8 @@ public class Message {
         ret = ret + '0';
         ret = ret + msg;
         return ret;
-    }
+    }//makeServerReply
 
 
 
-}
+}//Message
