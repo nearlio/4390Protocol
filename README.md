@@ -37,6 +37,8 @@ Server-side logging.
 
 A good read me.
 
-Instructions on how to run it I don't understand java.
-
 Less magic numbers. Enum the message ids or something. idk tired.
+
+Word document describing the poject.
+
+Makefile to automatically launch a Server and Client.
