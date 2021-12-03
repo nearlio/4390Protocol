@@ -161,20 +161,22 @@ class ClientHandler implements Runnable {
      *          1- join, 2- disconnect, 3- message, 4- keepAlive, 5- serverReply, 6- default
      */
     public void run() {
+        //creates logger object by the name of logFile
+        Logger LOGGER = Logger.getLogger("logFile");
+
+        //one file created per user connection.  Handler added to logger.
+        Handler fileHandler = null;
+        try{
+            fileHandler = new FileHandler("./TCPServerLog.log");
+            LOGGER.addHandler(fileHandler);
+            fileHandler.setLevel(Level.ALL);
+        }catch(IOException exception){
+            LOGGER.log(Level.SEVERE, "Error in fileHandler");
+        }
+
         try {
 
-            //creates logger object by the name of logFile
-            Logger LOGGER = Logger.getLogger("logFile");
 
-            //one file created per user connection.  Handler added to logger.
-            Handler fileHandler = null;
-            try{
-                fileHandler = new FileHandler("./TCPServerLog.log");
-                LOGGER.addHandler(fileHandler);
-                fileHandler.setLevel(Level.ALL);
-            }catch(IOException exception){
-                LOGGER.log(Level.SEVERE, "Error in fileHandler");
-            }
 
             while (true) {
                 if(socket.isClosed())
@@ -190,7 +192,7 @@ class ClientHandler implements Runnable {
                 String clientSentence = inFromClient.readLine();
 
 
-                if (clientSentence != null) {
+                if (clientSentence != null && !clientSentence.equals("")) {
                     Message m = new Message(clientSentence);
                     //Handle each type of message id
                     switch (m.getId())
@@ -226,6 +228,7 @@ class ClientHandler implements Runnable {
 
             }//while(true)
         } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Username: " + name + " had an unclean disconnect at: " + Instant.now());
             e.printStackTrace();
         }
     }//run
