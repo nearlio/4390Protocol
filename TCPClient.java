@@ -70,6 +70,7 @@ class TCPClient {
             }
         }
         System.out.println("Connected!");
+        System.out.println("\n\n# to disconnect\nMath in the form <Integer><Operator><Integer> for positive integers. (Ex: 123+45)\nOperators are +, *, -, /\n\n");
 
         //Send as many messages as the user wants
         while (true) {
@@ -78,7 +79,7 @@ class TCPClient {
                 System.out.println("Socket closed from server side. Disconnected.");
                 return;
             }
-            System.out.println("Enter message: (of the form ....) or # to disconnect");
+            System.out.println("Enter math or # to disconnect:");
 
             msg = inFromUser.readLine();
 

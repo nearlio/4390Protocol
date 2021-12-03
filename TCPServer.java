@@ -31,7 +31,11 @@ class TCPServer {
             LOGGER.log(Level.SEVERE, "Error in fileHandler");
         }
 
+        System.out.println("Server starting...");
+
         ServerSocket welcomeSocket = new ServerSocket(port);
+
+        System.out.println("Server started.");
 
         while (true) {
 
@@ -42,6 +46,7 @@ class TCPServer {
             new Thread(clientThreaded).start();
 
         }//while(true)
+
     }//main
 }//TCPServer
 /**
@@ -168,7 +173,7 @@ class ClientHandler implements Runnable {
     }//reply
 
     /**
-     * Creates logger and file per connection.
+     * 
      * Handle all user messages
      * While the client socket is open
      *      We read the client message into clientSentence through a buffer
@@ -199,7 +204,7 @@ class ClientHandler implements Runnable {
                     switch (m.getId())
                     {
                         case 1:
-                            System.out.println("Case 1 - Join");
+
                             isConnected = true;
                             name = m.getBody();
                             outToClient.writeBytes(Message.makeJoin(name) + '\n');
@@ -207,23 +212,23 @@ class ClientHandler implements Runnable {
                             LOGGER.info("Username: " + name + " successfully connected at: " + Instant.now());
                             break;
                         case 2:
-                            System.out.println("Case 2 - Disconnect");
+
                             disconnect();
                             LOGGER.info("Username: " + name + " successfully disconnected at: " + Instant.now());
                             return;
                         case 3:
-                            System.out.println("Case 3 - Message");
+
                             LOGGER.info("Username: " + name + " sent request: " + m.getBody());
                             reply(m.getBody(),outToClient);
                             break;
                         case 4:
-                            //System.out.println("Case 4 - KeepAlive");
+
                             break;
                         case 5:
-                            System.out.println("Case 5 - ServerReply");
+
                             break;
                         default:
-                            System.out.println("Default");
+
                             break;
                     }//switch
                 }//if
