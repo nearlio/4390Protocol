@@ -27,18 +27,3 @@ Clients send the message (ID=3,body=math) to request the solution to that math p
 The server replies to that messages with (ID=5,body=math + "=" + solution).
 
 To disconnect, the Client sends (ID=2,body=username). 
-
-
-
-
-# TODO
-
-Server-side logging.
-
-A good read me.
-
-Less magic numbers. Enum the message ids or something. idk tired.
-
-Word document describing the poject.
-
-Makefile to automatically launch a Server and Client.
