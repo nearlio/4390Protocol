@@ -169,7 +169,7 @@ class ClientHandler implements Runnable {
             //one file created per user connection.  Handler added to logger.
             Handler fileHandler = null;
             try{
-                fileHandler = new FileHandler("./TCPServer.log");
+                fileHandler = new FileHandler("./TCPServerLog.log");
                 LOGGER.addHandler(fileHandler);
                 fileHandler.setLevel(Level.ALL);
             }catch(IOException exception){
