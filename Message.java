@@ -1,5 +1,3 @@
-package com.company;
-
 /**
  * The Message class handles the communication protocol for the client and server
  */
