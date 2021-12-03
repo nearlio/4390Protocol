@@ -12,11 +12,26 @@ import java.util.logging.*;
 /**
  * The TCPServer class creates a multi-threaded server, launching a new thread for each new client connected
  * This allows multiple clients to connect at once.
+ * A logger is also created, and passed to the threads.
  */
 class TCPServer {
 
     public static void main(String argv[]) throws Exception {
+
         int port = 8421;
+
+        //creates logger object by the name of logFile
+        Logger LOGGER = Logger.getLogger("logFile");
+        //one file created, Handler added to logger.
+        Handler fileHandler = null;
+
+        try{
+            fileHandler = new FileHandler("./TCPServerLog");
+            LOGGER.addHandler(fileHandler);
+            fileHandler.setLevel(Level.ALL);
+        }catch(IOException exception){
+            LOGGER.log(Level.SEVERE, "Error in fileHandler");
+        }
 
         ServerSocket welcomeSocket = new ServerSocket(port);
 
@@ -24,7 +39,7 @@ class TCPServer {
 
             Socket newClient = welcomeSocket.accept();
 
-            ClientHandler clientThreaded = new ClientHandler(newClient);
+            ClientHandler clientThreaded = new ClientHandler(newClient, LOGGER);
 
             new Thread(clientThreaded).start();
 
@@ -40,6 +55,7 @@ class ClientHandler implements Runnable {
     private String name;
     private Instant connectTimestamp;
     private Instant disconnectTimestamp;
+    private Logger LOGGER;
 
     /**
     * Initial values
@@ -47,10 +63,11 @@ class ClientHandler implements Runnable {
     * socket = s (passed through on creation)
     * connectTimestamp = Instant.now(), aka current instant from system clock
     */
-    public ClientHandler(Socket s) {
+    public ClientHandler(Socket s, Logger l) {
         this.isConnected = false;
         this.socket = s;
         this.connectTimestamp = Instant.now();
+        this.LOGGER = l;
     }//ClientHandler constructor
 
     /**
@@ -161,22 +178,8 @@ class ClientHandler implements Runnable {
      *          1- join, 2- disconnect, 3- message, 4- keepAlive, 5- serverReply, 6- default
      */
     public void run() {
-        //creates logger object by the name of logFile
-        Logger LOGGER = Logger.getLogger("logFile");
-
-        //one file created per user connection.  Handler added to logger.
-        Handler fileHandler = null;
-        try{
-            fileHandler = new FileHandler("./TCPServerLog.log");
-            LOGGER.addHandler(fileHandler);
-            fileHandler.setLevel(Level.ALL);
-        }catch(IOException exception){
-            LOGGER.log(Level.SEVERE, "Error in fileHandler");
-        }
 
         try {
-
-
 
             while (true) {
                 if(socket.isClosed())
@@ -212,6 +215,7 @@ class ClientHandler implements Runnable {
                             return;
                         case 3:
                             System.out.println("Case 3 - Message");
+                            LOGGER.info("Username: " + name + " sent request: " + m.getBody());
                             reply(m.getBody(),outToClient);
                             break;
                         case 4:
